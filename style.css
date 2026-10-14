@@ -1,0 +1,547 @@
+/* =========================================================
+   Level UP ENEM — estilos
+   Paleta neutra (cinzas) com acento grafite.
+   As cores ficam em variáveis (--nome) para mudar tudo num só lugar.
+   ========================================================= */
+
+:root {
+  --bg: #f3f3f1;
+  --superficie: #ffffff;
+  --borda: #e2e2de;
+  --texto: #1f2124;
+  --texto-suave: #6a6e75;
+  --acento: #2f3437;
+  --acento-texto: #ffffff;
+  --realce: #ecebe8;
+  --ok: #2c7a4b;
+  --ok-fundo: #e7f2eb;
+  --erro: #b03b2c;
+  --erro-fundo: #f8e8e5;
+  --raio: 0.9rem;
+  --sombra: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+  --largura-menu: 17rem;
+}
+
+/* Modo escuro automático, se o aparelho do usuário estiver no escuro */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161718;
+    --superficie: #1f2022;
+    --borda: #303235;
+    --texto: #ecedee;
+    --texto-suave: #9a9ea5;
+    --acento: #e8e8e6;
+    --acento-texto: #1a1b1c;
+    --realce: #2a2c2f;
+    --ok: #6cc28c;
+    --ok-fundo: #1d2e24;
+    --erro: #ee8a7b;
+    --erro-fundo: #342220;
+    --sombra: none;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--acento);
+  outline-offset: 2px;
+}
+
+/* Texto só para leitor de tela */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Link "pular para o conteúdo" (aparece só ao navegar pelo teclado) */
+.pular {
+  position: absolute;
+  left: 0.5rem;
+  top: -4rem;
+  background: var(--acento);
+  color: var(--acento-texto);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  z-index: 100;
+}
+.pular:focus {
+  top: 0.5rem;
+}
+
+/* ---------- Estrutura geral: menu à esquerda + conteúdo ---------- */
+.app {
+  display: grid;
+  grid-template-columns: var(--largura-menu) 1fr;
+  min-height: 100vh;
+}
+
+.topbar,
+.overlay {
+  display: none; /* só aparecem no celular */
+}
+
+/* ---------- Menu lateral ---------- */
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--superficie);
+  border-right: 1px solid var(--borda);
+  padding: 1.25rem 1rem;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 0.5rem 1.25rem;
+}
+.marca-logo {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.7rem;
+  background: var(--acento);
+  color: var(--acento-texto);
+}
+
+.marca-logo svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.marca strong {
+  display: block;
+  line-height: 1.1;
+  font-size: 1.05rem;
+}
+.marca small {
+  color: var(--texto-suave);
+  letter-spacing: 0.15em;
+  font-size: 0.7rem;
+}
+
+.nav-titulo {
+  margin: 1.25rem 0.5rem 0.5rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--texto-suave);
+}
+
+.nav-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.nav-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  background: none;
+  border: 0;
+  border-radius: 0.65rem;
+  cursor: pointer;
+  text-align: left;
+}
+.nav-item:hover {
+  background: var(--realce);
+}
+.nav-item.ativo {
+  background: var(--acento);
+  color: var(--acento-texto);
+}
+.nav-icone {
+  width: 1.75rem;
+  text-align: center;
+  font-weight: 700;
+  opacity: 0.85;
+}
+.nav-nome {
+  flex: 1;
+}
+.nav-nivel {
+  font-size: 0.72rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--realce);
+  color: var(--texto-suave);
+}
+.nav-item.ativo .nav-nivel {
+  background: rgba(255, 255, 255, 0.18);
+  color: inherit;
+}
+
+/* ---------- Conteúdo central ---------- */
+.conteudo {
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  padding: clamp(1rem, 3vw, 2.5rem);
+}
+.conteudo:focus {
+  outline: none;
+}
+
+.cabecalho {
+  margin-bottom: 1.25rem;
+}
+.eyebrow {
+  margin: 0 0 0.25rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--texto-suave);
+}
+h1 {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: clamp(1.5rem, 4vw, 2.1rem);
+  line-height: 1.2;
+}
+h2 {
+  font-size: 1.1rem;
+}
+
+.selo-nivel {
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: var(--acento);
+  color: var(--acento-texto);
+}
+.selo-nivel.subiu {
+  animation: pulso 0.7s ease;
+}
+@keyframes pulso {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* ---------- Barra de XP ---------- */
+.xp {
+  margin-bottom: 1.25rem;
+}
+.xp-texto {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+.suave {
+  color: var(--texto-suave);
+  font-weight: 400;
+}
+.barra {
+  height: 0.6rem;
+  border-radius: 999px;
+  background: var(--realce);
+  overflow: hidden;
+}
+.barra-preenchida {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: var(--acento);
+  transition: width 0.4s ease;
+}
+
+/* ---------- Cartão da questão ---------- */
+.cartao {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+  padding: clamp(1rem, 3vw, 1.75rem);
+}
+.contador {
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+.enunciado {
+  margin: 0 0 1.25rem;
+  font-size: 1.08rem;
+}
+
+.alternativas-grupo {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+#alternativas {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.alternativa {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.8rem 0.9rem;
+  border: 1.5px solid var(--borda);
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.alternativa:hover {
+  border-color: var(--texto-suave);
+}
+.alternativa:has(input:checked) {
+  border-color: var(--acento);
+  background: var(--realce);
+}
+.alternativa input {
+  margin-top: 0.35rem;
+  accent-color: var(--acento);
+}
+.alternativa .letra {
+  font-weight: 700;
+  min-width: 1.25rem;
+}
+
+/* Depois de responder: além da cor, usamos símbolos (✓ e ✗) */
+.alternativa.correta {
+  border-color: var(--ok);
+  background: var(--ok-fundo);
+}
+.alternativa.correta .texto::after {
+  content: "  ✓";
+  color: var(--ok);
+  font-weight: 700;
+}
+.alternativa.errada {
+  border-color: var(--erro);
+  background: var(--erro-fundo);
+}
+.alternativa.errada .texto::after {
+  content: "  ✗";
+  color: var(--erro);
+  font-weight: 700;
+}
+.alternativa.bloqueada {
+  cursor: default;
+}
+
+/* ---------- Botões ---------- */
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 1.25rem;
+}
+.btn {
+  padding: 0.7rem 1.25rem;
+  border: 1.5px solid var(--borda);
+  border-radius: 0.7rem;
+  background: var(--superficie);
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:hover:not(:disabled) {
+  border-color: var(--texto-suave);
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primario {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: var(--acento-texto);
+}
+.btn-perigo {
+  margin-top: 1.5rem;
+  color: var(--erro);
+  border-color: var(--erro);
+}
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Feedback ---------- */
+.feedback:not(:empty) {
+  margin-top: 1.25rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid var(--borda);
+  background: var(--realce);
+}
+.feedback p {
+  margin: 0;
+}
+.feedback p + p {
+  margin-top: 0.4rem;
+}
+.feedback-ok {
+  border-color: var(--ok) !important;
+  background: var(--ok-fundo) !important;
+}
+.feedback-erro {
+  border-color: var(--erro) !important;
+  background: var(--erro-fundo) !important;
+}
+
+.aviso {
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: var(--texto-suave);
+}
+
+/* ---------- Tela de progresso ---------- */
+.resumo {
+  margin: 0 0 1rem;
+  font-weight: 600;
+}
+.prog-lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+.prog-item {
+  background: var(--superficie);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  padding: 1rem 1.1rem;
+}
+.prog-item h2 {
+  margin: 0 0 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+/* O selo nunca encolhe nem quebra linha; quem quebra é o nome da matéria */
+.prog-item .selo-nivel {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.prog-item p {
+  margin: 0.5rem 0 0;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+/* ---------- Tela "Sobre" ---------- */
+.texto-corrido p {
+  margin-top: 0;
+}
+.texto-corrido h2 {
+  margin-bottom: 0.4rem;
+}
+.texto-corrido ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.texto-corrido li {
+  margin-bottom: 0.4rem;
+}
+
+/* =========================================================
+   Responsividade: celular e tablet (até 900px)
+   O menu lateral vira uma gaveta que abre pelo botão ☰
+   ========================================================= */
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    padding: 0.6rem 1rem;
+    background: var(--superficie);
+    border-bottom: 1px solid var(--borda);
+  }
+  .btn-menu {
+    width: 2.6rem;
+    height: 2.6rem;
+    font-size: 1.3rem;
+    border: 1.5px solid var(--borda);
+    border-radius: 0.6rem;
+    background: var(--superficie);
+    cursor: pointer;
+  }
+  .topbar-nome {
+    font-weight: 700;
+  }
+
+  .sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: min(var(--largura-menu), 85vw);
+    z-index: 40;
+    transform: translateX(-100%);
+    visibility: hidden; /* menu fechado não recebe foco do teclado */
+    transition: transform 0.25s ease, visibility 0.25s;
+  }
+  body.menu-aberto .sidebar {
+    transform: none;
+    visibility: visible;
+  }
+
+  .overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    background: rgba(0, 0, 0, 0.4);
+  }
+  body.menu-aberto .overlay {
+    display: block;
+  }
+}
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
